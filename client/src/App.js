@@ -7,8 +7,8 @@ function App() {
   return (
     <Routes>
       <Route path="/" element={<Layout />}>
-        <Route index element={<IndexPage />} />
-        <Route path="/login" element={<LoginPage />} />
+        <Route path="IndexPage" index element={<IndexPage />} />
+        <Route path="/loginPage" element={<LoginPage />} />
       </Route>
     </Routes>
   )
