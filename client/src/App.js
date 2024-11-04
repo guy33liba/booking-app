@@ -2,8 +2,8 @@ import "./App.css"
 
 function App() {
   return (
-    <div className="bg-red-500">
-      <header className="p-4 flex space-between">
+    <div className="">
+      <header className="p-4 flex justify-between">
         <a href="" className="flex items-center gap-1">
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -20,9 +20,11 @@ function App() {
           </svg>
           <span className="font-bold text-xl">airbnb</span>
         </a>
-        <div className="flex">
+        <div className="flex gap-2 border border-gray-300 rounded-full py-2 px-4">
           <div>AnyWhere</div>
+          <div className=" border-l border-gray-300"></div>
           <div>Any Week</div>
+          <div className=" border-l border-gray-300"></div>
           <div>Add Guests</div>
           <button>
             <svg
