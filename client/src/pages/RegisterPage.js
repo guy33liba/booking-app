@@ -8,7 +8,7 @@ const RegisterPage = () => {
   const [password, setPassword] = useState("")
   function registerUser(e) {
     e.preventDefault()
-    axios.get("/test")
+    axios.post("/register", { name, email, password })
   }
   return (
     <div className="mt-4 grow flex items-center justify-around">
