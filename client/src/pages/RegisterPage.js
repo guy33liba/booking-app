@@ -33,7 +33,7 @@ const RegisterPage = () => {
             value={password}
             onChange={(e) => setPassword(e.target.value)}
           />
-          <button className="primary">Login</button>
+          <button className="primary">Register</button>
           <div className="text-center py-2 text-gray-500">
             AllReady a Member? {""}
             <Link to={"/loginPage"} className="underline text-black">
