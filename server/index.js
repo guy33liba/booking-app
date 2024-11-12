@@ -40,7 +40,15 @@ app.post("/login", async (req, res) => {
   if (userDoc) {
     const passOk = bcrypt.compareSync(password, userDoc.password)
     if (passOk) {
-      const token = jwt.sign({ email: userDoc.email, id: userDoc._id }, jwtSecret)
+      const token = jwt.sign(
+        { email: userDoc.email, id: userDoc._id },
+        jwtSecret,
+        {},
+        (err, token) => {
+          if (err) throw err
+          res.cookie("token", token).json("pass ok")
+        },
+      )
       res.cookie("token", token).json("pass ok")
     } else {
       res.status(422).json("wrong password")
