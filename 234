@@ -1,0 +1,21 @@
+app.post("/login", async (req, res) => {
+  const { email, password } = req.body;
+
+  // Find user by email
+  const userDoc = await User.findOne({ email });
+  if (userDoc) {
+    // Check if password is correct
+    const passOk = bcrypt.compareSync(password, userDoc.password);
+    if (passOk) {
+      // Sign and send JWT token if password is correct
+      const token = jwt.sign({ email: userDoc.email, id: userDoc._id }, "secret_key");
+      res.cookie("token", token).json("pass ok");
+    } else {
+      // Incorrect password
+      res.status(422).json("wrong password");
+    }
+  } else {
+    // User not found
+    res.status(404).json("user not found");
+  }
+});
