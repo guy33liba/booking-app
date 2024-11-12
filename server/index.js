@@ -7,6 +7,7 @@ import bcrypt from "bcryptjs"
 import jwt from "jsonwebtoken"
 
 const bcryptSalt = bcrypt.genSaltSync(10)
+const jwtSecret = "secret_key"
 const app = express()
 
 dotenv.config()
@@ -39,7 +40,7 @@ app.post("/login", async (req, res) => {
   if (userDoc) {
     const passOk = bcrypt.compareSync(password, userDoc.password)
     if (passOk) {
-      const token = jwt.sign({ email: userDoc.email, id: userDoc._id }, "secret_key")
+      const token = jwt.sign({ email: userDoc.email, id: userDoc._id }, jwtSecret)
       res.cookie("token", token).json("pass ok")
     } else {
       res.status(422).json("wrong password")
