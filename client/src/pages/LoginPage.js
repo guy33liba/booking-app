@@ -7,7 +7,11 @@ const LoginPage = () => {
   const handleLoginSubmit = async (e) => {
     e.preventDefault()
     try {
-      await axios.post("http://localhost:4000/login", { email, password })
+      await axios.post(
+        "http://localhost:4000/login",
+        { email, password },
+        { withCredentials: true },
+      )
       alert("Login successful!")
     } catch (error) {
       alert("Login failed!")
