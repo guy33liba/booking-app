@@ -4,7 +4,7 @@ import User from "./models/User.js"
 import mongoose from "mongoose"
 import dotenv from "dotenv"
 import bcrypt from "bcryptjs"
-
+import jwt from "jsonwebtoken"
 const bcryptSalt = bcrypt.genSaltSync(10)
 const app = express()
 dotenv.config()
@@ -37,6 +37,7 @@ app.post("/login", async (req, res) => {
     const passOk = bcrypt.compareSync(password, userDoc.password)
     res.json("found")
     if (passOk) {
+      jwt.sign({ email: userDoc.email, id: userDoc._id })
       res.cookie("token", "").json("pass ok ")
     } else {
       res.status(422).json("wrong password")
