@@ -5,8 +5,10 @@ import mongoose from "mongoose"
 import dotenv from "dotenv"
 import bcrypt from "bcryptjs"
 import jwt from "jsonwebtoken"
+
 const bcryptSalt = bcrypt.genSaltSync(10)
 const app = express()
+
 dotenv.config()
 mongoose.connect(process.env.MONGO_URL)
 
@@ -31,20 +33,20 @@ app.post("/register", async (req, res) => {
   }
 })
 app.post("/login", async (req, res) => {
-  const { email, password } = req.body;
+  const { email, password } = req.body
 
-  const userDoc = await User.findOne({ email });
+  const userDoc = await User.findOne({ email })
   if (userDoc) {
-    const passOk = bcrypt.compareSync(password, userDoc.password);
+    const passOk = bcrypt.compareSync(password, userDoc.password)
     if (passOk) {
-      const token = jwt.sign({ email: userDoc.email, id: userDoc._id }, "secret_key");
-      res.cookie("token", token).json("pass ok");
+      const token = jwt.sign({ email: userDoc.email, id: userDoc._id }, "secret_key")
+      res.cookie("token", token).json("pass ok")
     } else {
-      res.status(422).json("wrong password");
+      res.status(422).json("wrong password")
     }
   } else {
-    res.status(404).json("user not found");
+    res.status(404).json("user not found")
   }
-});
+})
 
 app.listen(4000, console.log("hello"))
