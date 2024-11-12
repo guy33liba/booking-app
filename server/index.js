@@ -59,5 +59,8 @@ app.post("/login", async (req, res) => {
     res.json("not found")
   }
 })
+app.get("/profile", async (req, res) => {
+  res.json("user info")
+})
 
 app.listen(4000, console.log("hello"))
