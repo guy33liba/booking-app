@@ -4,24 +4,30 @@ import User from "./models/User.js"
 import mongoose from "mongoose"
 import dotenv from "dotenv"
 import bcrypt from "bcryptjs"
+
+const bcryptSalt = bcrypt.genSaltSync(10)
 const app = express()
 dotenv.config()
 mongoose.connect(process.env.MONGO_URL)
 
-const bcryptSalt = bcrypt.genSalt(10)
-
 app.use(express.json())
-app.use(cors({ credentials: "true", origin: "http://localhost:3000" }))
+app.use(cors({ credentials: true, origin: "http://localhost:3000" }))
+
 app.get("/test", (req, res) => {
   res.json("test ok")
 })
+
 app.post("/register", async (req, res) => {
   const { name, password, email } = req.body
-  const userDoc = await User.create({
-    name,
-    password: bcrypt.hashSync(password, bcryptSalt),
-    email,
-  })
-  res.json(userDoc)
+  try {
+    const userDoc = await User.create({
+      name,
+      email,
+      password: bcrypt.hashSync(password, bcryptSalt),
+    })
+    res.json(userDoc)
+  } catch (error) {
+    res.status(422).json(error.message)
+  }
 })
 app.listen(4000, console.log("hello"))
